@@ -100,3 +100,28 @@ export const nextStart = (list) => {
     return last.start+diff;
 
 }
+
+/**
+ * get last items "start" and "arrival"
+ * @param {Array} list 
+ * @returns {Object}
+ */
+export const gestLastItem = (list) => {
+    let clone = [...list];
+    if(list.length>0){
+
+        let start = clone.sort((a, b) => a.start<b.start);  
+       
+        let arrival = clone.filter(item => item.partial>0)
+        .sort((a, b) => a.arrival>b.arrival);
+
+        return {
+            start: start[(start.length-1)],
+            arrival: arrival[(arrival.length-1)]
+        }
+
+    }else{
+        return {start: null, arrival: null}
+    }
+
+}

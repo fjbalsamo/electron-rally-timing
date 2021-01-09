@@ -1,5 +1,5 @@
 <template>
-  <b-form validated @submit.prevent="submit" @reset="reset">
+  <b-form name="calendarForm" validated @submit.prevent="submit" @reset="reset">
       <b-form-group>
           <b-form-input 
             type="number"
@@ -141,7 +141,7 @@ export default {
             let to = (new Date(this.item.to)).getTime();
             return to>=form;
         }
-    }
+    },
 }
 </script>
 

@@ -54,7 +54,7 @@ export default {
   components: {
       InputHMS,
       StageInput,
-      CrewInput
+      CrewInput,
   },
   data(){
     return {

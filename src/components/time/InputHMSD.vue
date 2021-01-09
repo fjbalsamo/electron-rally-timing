@@ -82,6 +82,10 @@ export default {
       prefix: {
           type: String,
           default: '_'
+      },
+      includeHours: {
+        type: Boolean,
+        default: false
       }
   },
   data() {
@@ -115,6 +119,11 @@ export default {
           this.$emit('timeParsed', time);
         }
       }
+  },
+  created(){
+    if(this.includeHours){
+      this.item.hh = (new Date()).getHours();
+    }
   }
 };
 </script>

@@ -24,6 +24,7 @@
           ref="arrivalTimeInput"
           v-on:move="onTimeMove"
           v-on:timeParsed="onTimeParsed"
+          :includeHours="true"
         />
     </b-form-group>
 
@@ -53,7 +54,7 @@ export default {
   components: {
       InputHMSD,
       StageInput,
-      CrewInput
+      CrewInput,
   },
   data(){
     return {
@@ -96,7 +97,7 @@ export default {
 
     onCrewFound(crew){
       this.item.crew = crew;
-      arrivalFocus('hh')
+      arrivalFocus('mm')
     },
 
     onTimeParsed(time){

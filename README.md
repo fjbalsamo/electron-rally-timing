@@ -35,3 +35,12 @@ See [Vue-electron guide](https://nklayman.github.io/vue-cli-plugin-electron-buil
 ### Development tools
 - nodeJS >=14.15.1
 - yarn >=1.22.5
+
+### online times using firebase
+Add firebase config in `~/src/firebase/firebase.config.js`
+
+```js
+export const config = {
+    // firebase config params here
+}
+```

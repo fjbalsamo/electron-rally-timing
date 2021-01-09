@@ -93,6 +93,8 @@ export default {
         setTimeout(() => {
             focusGained('penalty', 'stage');
           }, 100);
+      } else if (this.tab == 4){
+        //without focus    
       } else {
         this.tab = 0;
         setTimeout(() => {

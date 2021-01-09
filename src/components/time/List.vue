@@ -1,9 +1,15 @@
 <template>
   <b-card>
+    <b-card-body>
+      <last-time-added :list="list"/>     
+    </b-card-body>
     <b-card-body class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
           <tr>
+            <th class="text-center">
+              #
+            </th>
             <th class="text-center">
               <fa-icon icon="users" />
             </th>
@@ -38,7 +44,7 @@
         </thead>
         <tbody v-if="list.length == 0">
           <tr class="table-info">
-            <td colspan="8" class="text-uppercase text-center">
+            <td colspan="9" class="text-uppercase text-center">
               list empty
             </td>
           </tr>
@@ -49,6 +55,9 @@
             :key="index"
             :class="item.hook && item.partial > 0 ? 'table-danger' : null"
           >
+            <td class="text-center">
+              <small>{{ index+1 }}</small>
+            </td>
             <td class="text-center">
               <small>{{ item.crew.number }}</small>
             </td>
@@ -93,12 +102,15 @@
 
 <script>
 import PenaltyModal from "../penalty/ListModal.vue";
+import LastTimeAdded from '../time/LastTimeAdded.vue';
+
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TimeList",
   components: {
     PenaltyModal,
+    LastTimeAdded
   },
   data(){
       return {
