@@ -1,4 +1,5 @@
 import path from "path";
+import os from 'os';
 import { ipcMain, BrowserWindow, Menu } from "electron";
 import { ERROR, NEW_REPORT, DOC_REPORT } from "../channels";
 import { htmlHeaders, htmlFooter, parseToHtmlTable, groupedParseToHtmlTable, parseToCSVFormat, groupedParseToCSVFormat, documentControlToCSVFormat } from "../report.parser";
@@ -78,7 +79,7 @@ ipcMain.on(NEW_REPORT, async (e, args) => {
     await loadHtmlReport(
         win, 
         htmlContent, 
-        path.join(__dirname, "../report.html")
+        path.join(os.homedir(), "./report.html")
     );
 
     e.reply(NEW_REPORT, JSON.stringify({ ready: true }));

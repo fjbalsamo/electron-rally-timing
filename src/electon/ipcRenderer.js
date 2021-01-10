@@ -20,6 +20,9 @@ export const send = (channel, args) => {
     ipcRenderer.send(channel, JSON.stringify(args));
 
     return new Promise((resolve, reject) => {
+        ipcRenderer.on(ERROR, (e, error) => {            
+            reject(JSON.parse(error));
+        })
         ipcRenderer.on(channel, (e, response) => {
             resolve(JSON.parse(response));
         })
@@ -35,6 +38,9 @@ export const call = (channel) => {
     ipcRenderer.send(channel, JSON.stringify({}));
 
     return new Promise((resolve, reject) => {
+        ipcRenderer.on(ERROR, (e, error) => {
+            reject(JSON.parse(error))
+        })
         ipcRenderer.on(channel, (e, response) => {
             resolve(JSON.parse(response));
         })

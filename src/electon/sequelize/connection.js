@@ -1,10 +1,12 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import os from 'os';
+import path from 'path';
 const sqlite3 = require('sqlite3').verbose();
 
 export const connection = new Sequelize({
     dialectModule: sqlite3,
     dialect: 'sqlite',
-    storage: 'rally.sqlite'
+    storage: path.join(os.homedir(), './rally.sqlite'),
 });
 
 
