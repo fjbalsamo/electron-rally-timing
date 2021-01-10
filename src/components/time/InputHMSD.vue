@@ -101,7 +101,7 @@ export default {
   methods: {
      reset(){
         this.item = {
-          hh: null,
+          hh: this.includeHours ? (new Date()).getHours() : null,
           mm:null,
           ss:null,
           dd: null
