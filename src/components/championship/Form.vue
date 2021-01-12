@@ -8,18 +8,20 @@
       >
           <b-form-input
             type="text"
-            id="name"
+            id="championshipName"
             class="text-uppercase"
             placeholder="championship name"
             v-model="item.name"
             required
+            @keypress.enter.prevent="changeFocus('championshipPriority')"
+            autofocus
           />
       </b-form-group>
       <b-form-group
       >
           <b-form-input
             type="text"
-            id="priority"
+            id="championshipPriority"
             class="text-uppercase"
             placeholder="championship priority"
             v-model="item.priority"
@@ -41,6 +43,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { inputFocus } from '../../util/keyboard.handeler';
 
 export default {
     name: 'ChampionshipForm',
@@ -80,10 +83,15 @@ export default {
                 priority: null
             };
             this.insertMode=true;
+            inputFocus('championshipName')
         },
         setItem(item){
             this.item = item;
             this.insertMode = false;
+            inputFocus('championshipName')
+        },
+        changeFocus(inputID){
+            inputFocus(inputID);
         }
     },
     computed: {
@@ -93,7 +101,7 @@ export default {
         priorityValid(){
             return this.item.priority>0;
         },
-    }
+    },
 }
 </script>
 

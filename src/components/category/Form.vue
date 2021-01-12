@@ -7,17 +7,21 @@
         v-on:change="getChampionship"
       />
     </b-form-group>
-    <b-form-group>
+    <b-form-group description="3 chars max">
       <b-form-input
+        id="className"
         type="text"
         v-model="item.name"
         placeholder="class name"
         class="text-uppercase"
         required
+        maxlength="3"
+        @keypress.enter.prevent="changeFocus('classPriority')"
       />
     </b-form-group>
     <b-form-group>
       <b-form-input
+        id="classPriority"
         type="number"
         v-model="item.priority"
         placeholder="class priority"
@@ -25,10 +29,12 @@
         min="0"
         step="1"
         required
+        @keypress.enter.prevent="changeFocus('classType')"
       />
     </b-form-group>
     <b-form-group>
       <b-form-select
+        id="classType"
         class="text-uppercase" 
         :options="categoryTypes" 
         v-model="item.type" 
@@ -58,8 +64,8 @@
 
 <script>
 import ChampionshipSelect from "../championship/Select.vue";
-
 import { mapActions } from "vuex";
+import { inputFocus } from '../../util/keyboard.handeler';
 
 export default {
   name: "CategoryForm",
@@ -71,7 +77,7 @@ export default {
       item: {
         championship_id: 0,
         name: "",
-        priority: 0,
+        priority: null,
         type: 'car'
       },
       insertMode: true,
@@ -99,7 +105,7 @@ export default {
       this.item = {
         championship_id: 0,
         name: "",
-        priority: 0,
+        priority: null,
         type: 'car'
       };
       this.insertMode = true;
@@ -112,14 +118,19 @@ export default {
     },
     getChampionship(championship_id) {
       this.item.championship_id = championship_id;
+      inputFocus('className')
     },
+    changeFocus(inputID){
+      inputFocus(inputID);
+    }
   },
   computed: {
     nameValid() {
       return this.item.name.trim().length > 0;
     },
     priorityValid() {
-      return !isNaN(this.item.priority) && this.item.priority >= 0;
+      let priority = isNaN(this.item.priority) ? -1 : parseInt(this.item.priority);
+      return priority >= 0;
     },
     championshipValid() {
       return this.item.championship_id > 0;

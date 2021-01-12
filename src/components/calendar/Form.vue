@@ -2,6 +2,7 @@
   <b-form name="calendarForm" validated @submit.prevent="submit" @reset="reset">
       <b-form-group>
           <b-form-input 
+            id="calendarNumber"
             type="number"
             class="text-uppercase"
             placeholder="calendar number"
@@ -10,41 +11,50 @@
             max="60"
             required
             v-model="item.number"
+            autofocus
+            @keypress.enter.prevent="changeFocus('calendarName')"
           />
       </b-form-group>
 
       <b-form-group>
           <b-form-input 
+            id="calendarName"
             type="text"
             class="text-uppercase"
             placeholder="calendar name"
             required
             v-model="item.name"
+            @keypress.enter.prevent="changeFocus('calendarLocation')"
           />
       </b-form-group>
       
       <b-form-group>
           <b-form-input 
+            id="calendarLocation"
             type="text"
             class="text-uppercase"
             placeholder="calendar location"
             required
             v-model="item.location"
+            @keypress.enter.prevent="changeFocus('calendarFrom')"
           />
       </b-form-group>
       
       <b-form-group>
           <b-form-input 
+            id="calendarFrom"
             type="date"
             class="text-uppercase"
             placeholder="calendar from"
             required
             v-model="item.from"
+            @keypress.enter.prevent="changeFocus('calendarTo')"
           />
       </b-form-group>
       
       <b-form-group>
           <b-form-input 
+            id="calendarTo"
             type="date"
             class="text-uppercase"
             placeholder="calendar to"
@@ -72,6 +82,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { inputFocus } from '../../util/keyboard.handeler';
 
 export default {
     name: 'CalendarForm',
@@ -82,7 +93,7 @@ export default {
                 location: '',
                 from: '',
                 to: '',
-                number: 0
+                number: null
             },
             insertMode:true
         }
@@ -111,13 +122,18 @@ export default {
                 location: '',
                 from: '',
                 to: '',
-                number: 0
+                number: null
             };
             this.insertMode = true;
+            inputFocus('calendarNumber')
         },
         setItem(item){
             this.item = item;
             this.insertMode = false;
+            inputFocus('calendarNumber')
+        },
+        changeFocus(inputID){
+            inputFocus(inputID);
         }
     },
     computed: {

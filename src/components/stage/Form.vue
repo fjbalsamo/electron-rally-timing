@@ -1,34 +1,34 @@
 <template>
     <b-form validated @submit.prevent="submit" @reset="reset">
-        <b-form-group
-            label="Name"
-        >
+        <b-form-group>
             <b-form-input 
+                id="stageName"
                 type="text"
                 placeholder="stage name"
                 class="text-uppercase"
                 required
                 v-model="item.name"
+                @keypress.enter.prevent="changeFocus('stageDay')"
+                autofocus
             />
         </b-form-group>
         
-        <b-form-group
-            label="Day"
-        >
+        <b-form-group>
             <b-form-input 
+                id="stageDay"
                 type="date"
                 class="text-uppercase"
                 required
                 v-model="item.day"
                 :min="calendar.from"
                 :max="calendar.to"
+                @keypress.enter.prevent="changeFocus('stagePriority')"
             />
         </b-form-group>
 
-         <b-form-group
-            label="Number"
-         >
+         <b-form-group>
             <b-form-input 
+                id="stagePriority"
                 type="number"
                 placeholder="stage number"
                 class="text-uppercase"
@@ -36,14 +36,15 @@
                 v-model="item.priority"
                 min="1"
                 step="1"
+                @keypress.enter.prevent="changeFocus('stageLong')"
             />
         </b-form-group>
 
          <b-form-group
-            label="Long"
             description="use kilometers as distance unit"
          >
             <b-form-input 
+                id="stageLong"
                 type="number"
                 placeholder="stage long"
                 class="text-uppercase"
@@ -51,13 +52,15 @@
                 v-model="item.long"
                 min="0.01"
                 step="0.01"
+                @keypress.enter.prevent="changeFocus('stageDelay')"
             />
         </b-form-group>
 
          <b-form-group
-            label="Max. Delay"
+            description="Max. Delay"
          >
             <b-form-input 
+                id="stageDelay"
                 type="time"
                 class="text-uppercase"
                 required
@@ -84,6 +87,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { hhmmss_to_ms, ms_to_string } from '../../util/time.util';
+import { inputFocus } from '../../util/keyboard.handeler';
 
 export default {
     name: 'StageForm',
@@ -100,8 +104,8 @@ export default {
                 name: '',
                 day: '',
                 max_delay: 0,
-                long: 0,
-                priority: 0
+                long: null,
+                priority: null
             },
             insertMode: true
         }
@@ -139,8 +143,8 @@ export default {
                 name: '',
                 day: '',
                 max_delay: 0,
-                long: 0,
-                priority: 0
+                long: null,
+                priority: null
             },
             this.insertMode = true;
             this.max_delay = '';
@@ -149,6 +153,10 @@ export default {
             this.insertMode = false;
             this.item = item;
             this.max_delay = ms_to_string(item.max_delay, 'HH:mm')
+            inputFocus('stageName')
+        },
+        changeFocus(inputID){
+            inputFocus(inputID);
         }
     },
     computed: {

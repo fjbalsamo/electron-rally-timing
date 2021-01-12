@@ -13,36 +13,46 @@
             min="1"
             step="1"
             max="999"
+            id="crewNumber"
+            @keypress.enter.prevent="changeFocus('crewName')"
           />
       </b-form-group>
 
-      <b-form-group>
+      <b-form-group description="25 chars max">
           <b-form-input 
             type="text" 
             class="text-uppercase"
             v-model="item.name"
             placeholder="crew name"
             required
+            maxlength="25"
+            id="crewName"
+            @keypress.enter.prevent="changeFocus('crewLocation')"
           />
       </b-form-group>
       
-      <b-form-group>
+      <b-form-group description="14 chars max">
           <b-form-input 
             type="text" 
             class="text-uppercase"
             v-model="item.location"
             placeholder="crew location"
             required
+            maxlength="14"
+            id="crewLocation"
+            @keypress.enter.prevent="changeFocus('crewVehicle')"
           />
       </b-form-group>
       
-      <b-form-group>
+      <b-form-group description="6 chars max">
           <b-form-input 
             type="text" 
             class="text-uppercase"
             v-model="item.vehicle"
             placeholder="vehicle mark or model"
             required
+            maxlength="6"
+            id="crewVehicle"
           />
       </b-form-group>
       <b-form-group class="text-right">
@@ -63,6 +73,7 @@
 <script>
 import { mapActions } from 'vuex';
 import CategorySelect from '../category/Select.vue';
+import { inputFocus } from '../../util/keyboard.handeler';
 
 export default {
   name: "CrewForm",
@@ -75,7 +86,7 @@ export default {
         name: "",
         location: "",
         category_id: 0,
-        number: 0,
+        number: null,
         vehicle: "",
       },
       insertMode: true,
@@ -104,7 +115,7 @@ export default {
         name: "",
         location: "",
         category_id: 0,
-        number: 0,
+        number: null,
         vehicle: "",
       };
       this.insertMode = true;
@@ -112,11 +123,15 @@ export default {
     },
     onChange(category_id){
         this.item.category_id = category_id;
+        inputFocus('crewNumber')
     },
     setItem(item){
         this.item = item;
         this.insertMode = false;
         this.$refs['select'].setItem({id: item.category_id});
+    },
+    changeFocus(inputID){
+      inputFocus(inputID);
     }
   },
   computed: {
@@ -138,7 +153,8 @@ export default {
           return this.item.category_id>0;
       },
       numberValid(){
-          return this.item.number>0 && this.item.number<1000;
+          let number = isNaN(this.item.number) ? -1 : parseInt(this.item.number);
+          return number>0 && number<1000;
       }
 
   }
